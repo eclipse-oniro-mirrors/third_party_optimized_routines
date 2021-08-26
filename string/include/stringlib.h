@@ -1,7 +1,7 @@
 /*
  * Public API.
  *
- * Copyright (c) 2019-2020, Arm Limited.
+ * Copyright (c) 2019-2021, Arm Limited.
  * SPDX-License-Identifier: MIT
  */
 
@@ -54,12 +54,11 @@ size_t __strlen_aarch64_sve (const char *);
 size_t __strnlen_aarch64_sve (const char *, size_t);
 int __strncmp_aarch64_sve (const char *, const char *, size_t);
 # endif
+# if __ARM_FEATURE_MEMORY_TAGGING
+void *__mtag_tag_region (void *, size_t);
+void *__mtag_tag_zero_region (void *, size_t);
+# endif
 #elif __arm__
-#define __memcpy_arm memcpy
-#define __memchr_arm memchr
-#define __strcpy_arm strcpy
-#define __strcmp_arm strcmp
-#define __strlen_armv6t2 strlen
 void *__memcpy_arm (void *__restrict, const void *__restrict, size_t);
 void *__memset_arm (void *, int, size_t);
 void *__memchr_arm (const void *, int, size_t);

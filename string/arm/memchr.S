@@ -1,7 +1,7 @@
 /*
  * memchr - scan memory for a character
  *
- * Copyright (c) 2010, Arm Limited.
+ * Copyright (c) 2010-2021, Arm Limited.
  * SPDX-License-Identifier: MIT
  */
 
@@ -26,13 +26,11 @@
 	.arch armv7-a
 
 @ this lets us check a flag in a 00/ff byte easily in either endianness
-#define __memchr_arm memchr
 #ifdef __ARMEB__
 #define CHARTSTMASK(c) 1<<(31-(c*8))
 #else
 #define CHARTSTMASK(c) 1<<(c*8)
 #endif
-	.text
 	.thumb
 
 @ ---------------------------------------------------------------------------
