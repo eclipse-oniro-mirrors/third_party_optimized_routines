@@ -1,10 +1,11 @@
 /*
  * strcpy
  *
- * Copyright (c) 2008-2019, Arm Limited.
+ * Copyright (c) 2008-2020, Arm Limited.
  * SPDX-License-Identifier: MIT
  */
 
+#if defined (__thumb2__) && !defined (__thumb__)
 
 /* For GLIBC:
 #include <string.h>
@@ -12,7 +13,7 @@
 
 #undef strcmp
 */
-#define __strcpy_arm strcpy
+
 #ifdef __thumb2__
 #define magic1(REG) "#0x01010101"
 #define magic2(REG) "#0x80808080"
@@ -111,13 +112,8 @@ __strcpy_arm (char* dst, const char* src)
 # else
        "tst	r2, #0xff\n\t"
        "itet	ne\n\t"
-# ifdef __clang__
-       "strhne	r2, [ip], #2\n\t"
-       "strbeq	r2, [ip]\n\t"
-# else
        "strneh	r2, [ip], #2\n\t"
        "streqb	r2, [ip]\n\t"
-# endif
        "tstne	r2, #0xff00\n\t"
 # endif
        "bne	5b\n\t"
@@ -133,3 +129,5 @@ __strcpy_arm (char* dst, const char* src)
        "BX LR");
 }
 /* For GLIBC: libc_hidden_builtin_def (strcpy) */
+
+#endif /* defined (__thumb2__) && !defined (__thumb__)  */

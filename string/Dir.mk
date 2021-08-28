@@ -1,6 +1,6 @@
 # Makefile fragment - requires GNU make
 #
-# Copyright (c) 2019-2020, Arm Limited.
+# Copyright (c) 2019-2021, Arm Limited.
 # SPDX-License-Identifier: MIT
 
 S := $(srcdir)/string
@@ -29,6 +29,8 @@ string-tests := \
 	build/bin/test/memchr \
 	build/bin/test/memrchr \
 	build/bin/test/memcmp \
+	build/bin/test/__mtag_tag_region \
+	build/bin/test/__mtag_tag_zero_region \
 	build/bin/test/strcpy \
 	build/bin/test/stpcpy \
 	build/bin/test/strcmp \
@@ -39,7 +41,9 @@ string-tests := \
 	build/bin/test/strnlen \
 	build/bin/test/strncmp
 
-string-benches := build/bin/bench/memcpy
+string-benches := \
+	build/bin/bench/memcpy \
+	build/bin/bench/strlen
 
 string-lib-objs := $(patsubst $(S)/%,$(B)/%.o,$(basename $(string-lib-srcs)))
 string-test-objs := $(patsubst $(S)/%,$(B)/%.o,$(basename $(string-test-srcs)))
@@ -95,6 +99,7 @@ check-string: $(string-tests-out)
 	! grep FAIL $^
 
 bench-string: $(string-benches)
+	$(EMULATOR) build/bin/bench/strlen
 	$(EMULATOR) build/bin/bench/memcpy
 
 install-string: \
