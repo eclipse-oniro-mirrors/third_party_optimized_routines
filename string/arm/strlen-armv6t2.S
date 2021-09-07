@@ -1,7 +1,7 @@
 /*
  * strlen - calculate the length of a string
  *
- * Copyright (c) 2010, Arm Limited.
+ * Copyright (c) 2010-2020, Arm Limited.
  * SPDX-License-Identifier: MIT
  */
 
@@ -12,7 +12,7 @@
    ARMv6T2, AArch32
 
  */
-#define __strlen_armv6t2 strlen
+
 #include "../asmdefs.h"
 
 #ifdef __ARMEB__
